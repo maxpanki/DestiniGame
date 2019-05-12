@@ -36,6 +36,7 @@ class ViewController: UIViewController {
         
         Story.append(StoryData(text: "You bond with the murderer while crooning verses of \"Can you feel the love tonight\". He drops you off at the next town. Before you go he asks you if you know any good places to dump bodies. You reply: \"Try the pier.\"", answerAText: "", answerBText: ""))
         
+        
         // Story tree creating
         Story[0].nextStoryA = Story[2]
         Story[0].nextStoryB = Story[1]
@@ -53,15 +54,19 @@ class ViewController: UIViewController {
     
     // User presses one of the buttons
     @IBAction func buttonPressed(_ sender: UIButton) {
-    
+        
         if sender.tag == 1{
             
-            
+            currentStory = currentStory.nextStoryA ?? currentStory
             
         }
         else if sender.tag == 2{
             
+            currentStory = currentStory.nextStoryB ?? currentStory
+            
         }
+        
+        updateUI()
     
     }
     
@@ -70,6 +75,15 @@ class ViewController: UIViewController {
         storyTextView.text = currentStory.storyText
         topButton.setTitle(currentStory.answerA, for: .normal)
         bottomButton.setTitle(currentStory.answerB, for: .normal)
+        
+        if topButton.currentTitle == ""{
+            topButton.frame.size.height = 0
+            topButton.frame.size.width = 0
+        }
+        if bottomButton.currentTitle == ""{
+            bottomButton.frame.size.height = 0
+            bottomButton.frame.size.width = 0
+        }
         
     }
     
